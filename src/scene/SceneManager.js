@@ -9,10 +9,14 @@ const SceneManager = () => {
   const x = new Signal(200)
   x.setValue(60, 130, 0, 1, 'ease')
 
-  const { setIsPlaying } = useContext(AnimationControlContext);
-  const currentFrame = useCurrentFrame();
+  const { isPlaying, setIsPlaying } = useContext(AnimationControlContext);
+  const {currentFrame, setCurrentFrame} = useCurrentFrame();
   const [animationFrameId, setAnimationFrameId] = useState(null);
   const animateRef = useRef();
+
+  const resetScene = () => {
+    setCurrentFrame(0)
+  }
 
   animateRef.current = () => {
     const id = requestAnimationFrame(animateRef.current);
@@ -28,14 +32,20 @@ const SceneManager = () => {
     };
   }, []);
 
+  const height = 400
+  const width = 1100
+  const viewBox = `0 0 ${width} ${height}`;
 
   return (
-    <div>
-      <h1>{currentFrame}</h1>
-      <svg viewBox="0 0 1600 400" >
+    <div className='scene-manager'>
+      <svg width={width} height={height} viewBox={viewBox}>
         <Circle cx={x.getValue(currentFrame)*100+200} cy={100} r={23} fill='gray' />
       </svg>
-      <button onClick={() => {setIsPlaying(prev => !prev)}}>play</button>
+      <div className='control-panel'>
+        <button onClick={() => {setIsPlaying(prev => !prev)}}>{isPlaying? 'pause': 'play'}</button>
+        <div className='frame-count'>{currentFrame}</div>
+        <button onClick={resetScene}>reset</button>
+      </div>
     </div>
   );
 };
