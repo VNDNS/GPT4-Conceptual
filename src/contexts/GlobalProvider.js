@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import AnimationControlContext from './AnimationControlContext';
+import GlobalContext from './GlobalContext';
 
-const AnimationControlProvider = ({ children }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const GlobalProvider = ({ children }) => {
+  const [isPlaying, setIsPlaying]       = useState(false);
   const [currentFrame, setCurrentFrame] = useState(0);
 
   const incrementFrameRef = useRef();
@@ -35,10 +35,10 @@ const AnimationControlProvider = ({ children }) => {
   }, [currentFrame])
 
   return (
-    <AnimationControlContext.Provider value={{ isPlaying, setIsPlaying, currentFrame, setCurrentFrame }}>
+    <GlobalContext.Provider value={{ isPlaying, setIsPlaying, currentFrame, setCurrentFrame }}>
       {children}
-    </AnimationControlContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
-export default AnimationControlProvider;
+export default GlobalProvider;

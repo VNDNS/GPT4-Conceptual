@@ -33,20 +33,19 @@ h1 {
   .scene-manager{
     display: flex;
     flex-direction: column;
-
-    .control-panel{
-      margin-block: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-
-      .frame-count{
-        text-align: center;
-        width: 4rem;
-      }
-    }
     
+  }
+  .control-panel{
+    margin-block: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    .frame-count{
+      text-align: center;
+      width: 4rem;
+    }
   }
 }
 

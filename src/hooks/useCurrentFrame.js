@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useContext } from 'react';
-import AnimationControlContext from '../contexts/AnimationControlContext';
+import GlobalContext from '../contexts/GlobalContext';
 
 const useCurrentFrame = () => {
-  const { currentFrame, setCurrentFrame } = useContext(AnimationControlContext);
+  const { currentFrame, setCurrentFrame } = useContext(GlobalContext);
 
   return {currentFrame, setCurrentFrame};
 };

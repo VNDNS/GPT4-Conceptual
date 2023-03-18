@@ -1,11 +1,14 @@
 import easingFunctions from './easingFunctions';
 
-class Signal {
+class Signal2D {
   constructor(length) {
     this.values = new Array(length).fill(0);
   }
 
-  setValue(startFrame, endFrame, startValue, endValue, easing = 'linear') {
+  setValue(startFrame, endValue, deltaFrames = 30, easing = 'ease') {
+    const startValue = this.values[startFrame];
+    const endFrame = startFrame + deltaFrames;
+
     for (let frame = startFrame; frame <= endFrame; frame++) {
       const t = (frame - startFrame) / (endFrame - startFrame);
       const value = this.interpolate(startValue, endValue, t, easing);
@@ -30,4 +33,4 @@ class Signal {
 }
 
 
-export default Signal
+export default Signal2D
