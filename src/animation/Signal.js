@@ -1,6 +1,6 @@
 import easingFunctions from './easingFunctions';
 
-class Signal2D {
+class Signal {
   constructor(length) {
     this.values = new Array(length).fill(0);
   }
@@ -33,4 +33,4 @@ class Signal2D {
 }
 
 
-export default Signal2D
+export default Signal

@@ -1,6 +1,7 @@
 import React from 'react';
+import { getColor } from './utils';
 
-const SignalLines = ({ plotData, getColor }) => (
+const SignalLines = ({ plotData }) => (
   plotData.map((points, index) => {
     const pathData = points.map((point) => `${point.x},${point.y}`).join(' ');
     return (

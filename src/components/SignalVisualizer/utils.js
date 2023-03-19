@@ -14,3 +14,15 @@ export function getColor(index) {
   const colors = ['red', 'green', 'purple', 'orange', 'yellow'];
   return colors[index % colors.length];
 }
+
+export function getPlotData(signals, options) {
+  const { width, height, padding } = options;
+
+  return signals.map((signal) => {
+    const normalizedValues = normalize(signal.values);
+    return normalizedValues.map((value, index) => ({
+      x: (index / (normalizedValues.length - 1)) * (width - 2 * padding) + padding,
+      y: (1 - value) * (height - 2 * padding) + padding,
+    }));
+  });
+}
