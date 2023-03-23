@@ -1,15 +1,20 @@
 import React from 'react';
-import HorizontalAxis from './HorizontalAxis';
-import VerticalAxis from './VerticalAxis';
-import PlotLine from './PlotLine';
+import Axis from './Axis';
 
-const Plot = ({ config }) => {
+function getTranslateString(point) {
+  return `translate(${point.x}px, ${point.y}px)`;
+}
+
+
+const p = getTranslateString({x:100, y:100})
+
+const Plot = ({ props }) => {
   return (
-    <>
-      <HorizontalAxis config={config} />
-      <VerticalAxis config={config} />
-      <PlotLine config={config} />
-    </>
+    <g>
+      <Axis props={props} />
+      {/* <VerticalAxis props={props} /> */}
+      {/* <PlotLine props={props} /> */}
+    </g>
   );
 };
 

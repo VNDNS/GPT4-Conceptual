@@ -1,8 +1,10 @@
 import easingFunctions from './easingFunctions';
 
+const duration = 200
+
 class Signal {
-  constructor(length) {
-    this.values = new Array(length).fill(0);
+  constructor(initialValue = 0) {
+    this.values = new Array(duration).fill(initialValue);
   }
 
   setValue(startFrame, endValue, deltaFrames = 30, easing = 'ease') {
@@ -21,13 +23,17 @@ class Signal {
     }
   }
 
+  setValues(value) {
+    this.values = this.values.fill(value)
+  }
+
   interpolate(startValue, endValue, t, easing) {
     const easingFunction = easingFunctions[easing] || easingFunctions.ease;
     const easedT = easingFunction(t);
     return startValue + (endValue - startValue) * easedT;
   }
 
-  getValue(frame) {
+  value(frame) {
     return this.values[frame];
   }
 }

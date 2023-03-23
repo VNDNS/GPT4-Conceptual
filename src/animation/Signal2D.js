@@ -1,9 +1,9 @@
 import Signal from './Signal';
 
 class Signal2D {
-  constructor(length) {
-    this.x = new Signal(length);
-    this.y = new Signal(length);
+  constructor(x,y) {
+    this.x = new Signal(x);
+    this.y = new Signal(y);
   }
 
   setValue(startFrame, endValue, deltaFrames = 30, easing = 'ease') {
@@ -13,8 +13,8 @@ class Signal2D {
 
   getValue(frame) {
     return {
-      x: this.x.getValue(frame),
-      y: this.y.getValue(frame),
+      x: this.x.value(frame),
+      y: this.y.value(frame),
     };
   }
 }

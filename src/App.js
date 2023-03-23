@@ -2,77 +2,41 @@ import React from 'react';
 import Scene from './components/Scene';
 import SignalVisualizer from './components/SignalVisualizer';
 import ControlPanel from './components/ControlPanel';
-import Line from './shapes/Line';
-import PolyLine from './shapes/PolyLine';
-// import { scene } from './scenes/scene';
-import { scene } from './scenes/scene2';
+import { scene } from './scenes/scene';
+// import { scene } from './scenes/scene2';
 import './styles/main.scss';
 import Plot from './components/Plot/Plot';
-
-const amplitude = 10;
-const frequency = 0.15;
-const phase = 0;
-const offset = 20;
-
-const data = Array.from({ length: 100 }, (_, index) => ({
-  x: index,
-  y: Math.sin(index * frequency)*amplitude + offset,
-}));
+import {PlotClass} from './animation/Plot';
+import { config } from './components/Plot/config';
+import useCurrentFrame from './hooks/useCurrentFrame';
 
 
-const config = {
-  data: data,
-  width: 600,
-  height: 400,
-  paddings: {
-    top: 50,
-    bottom: 50,
-    left: 50,
-    right: 50,
-  },
-  horizontal: {
-    labels: ['', '20', '40', '60', '80', '100'],
-    domain: [0,100]
-  },
-  vertical: {
-    labels: ['', '25', '50', '75', '100'],
-    domain: [0,100]
-  },
-  tickSize: 10,
-  axisStyle: {
-    stroke: 'white',
-    strokeWidth: 2,
-  },
-  tickStyle: {
-    stroke: 'white',
-    strokeWidth: 2,
-  },
-  lineStyle : {
-    stroke: 'white',
-    strokeWidth: 2,
-    fill: 'none',
-  },  
-  labelStyle: {
-    fontSize: 16,
-    fontFamily: 'Arial, sans-serif',
-    fill: 'white',
-  },
-};
+const plot = new PlotClass(config)
+
+plot.domain.right.setValue(0, 28,180)
+plot.domain.left.setValue(0, 20,180)
+// plot.dimensions.width.setValues(.1)
+// plot.dimensions.width.setValue(0, 600,60)
+
+const propsArray = plot.getProps()
+
 
 
 
 const App = () => {
 
+  const {currentFrame} = useCurrentFrame()
+
+  const props = propsArray[currentFrame]
 
   return (
     <div className='container'>
       <Scene>
-        {/* <Line {...scene} stroke="white" /> */}
-        {/* <PolyLine {...scene} stroke="white" /> */}
-        <Plot config={config}/>
+        <Plot props={props}/>
       </Scene>
       <ControlPanel />
-      <SignalVisualizer signals={[scene.points[0].x, scene.points[0].y, scene.points[1].x, scene.points[1].y]} />
+
+      {/* <SignalVisualizer signals={[plot.domain.right]} /> */}
     </div>
   );
 };

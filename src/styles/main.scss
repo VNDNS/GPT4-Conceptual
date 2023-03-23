@@ -27,9 +27,6 @@ h1 {
   width: 80vw;
   min-height: 100vh;
 
-  .signal-visualizer{
-  }
-
   .scene-manager{
     display: flex;
     flex-direction: column;
@@ -38,13 +35,17 @@ h1 {
   .control-panel{
     margin-block: 1rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 1rem;
 
     .frame-count{
       text-align: center;
-      width: 4rem;
+      width: 8rem;
+    }
+    .frame-rate{
+      text-align: center;
+      width: 8rem;
     }
   }
 }
