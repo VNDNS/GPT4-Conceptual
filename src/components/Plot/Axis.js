@@ -5,9 +5,13 @@ import { Ticks } from './Ticks';
 
 const Axis = ({ props }) => {
 
+  const points = props.line
+  const style = props.styles.line
+  
+
   return (
     <g>
-      {/* <Line {...line} /> */}
+      <line {...points} style={style} />
       <Ticks props={props}/>
     </g>
   );

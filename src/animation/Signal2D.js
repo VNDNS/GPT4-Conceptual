@@ -7,8 +7,20 @@ class Signal2D {
   }
 
   setValue(startFrame, endValue, deltaFrames = 30, easing = 'ease') {
+
+    console.log('startFrame', startFrame)
+    console.log('endValue', endValue)
+
     this.x.setValue(startFrame, endValue.x, deltaFrames, easing);
     this.y.setValue(startFrame, endValue.y, deltaFrames, easing);
+
+    console.log('wertwert',this.x);
+    console.log(this.y);
+  }
+
+  setValues(point) {
+    this.x.setValues(point.x)
+    this.y.setValues(point.y)
   }
 
   getValue(frame) {

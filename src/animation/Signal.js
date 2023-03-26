@@ -1,42 +1,74 @@
-import easingFunctions from './easingFunctions';
+import easingFunctions from "./easingFunctions";
 
 const duration = 200
 
 class Signal {
-  constructor(initialValue = 0) {
-    this.values = new Array(duration).fill(initialValue);
+  constructor(value) {
+    this.locked = false;
+    this.initialValue = value
+    this.values = null
+    this.compute = () => this.initialValue
   }
 
-  setValue(startFrame, endValue, deltaFrames = 30, easing = 'ease') {
-    const startValue = this.values[startFrame];
-    const endFrame = startFrame + deltaFrames;
-
-    for (let frame = startFrame; frame <= endFrame; frame++) {
-      const t = (frame - startFrame) / (endFrame - startFrame);
-      const value = this.interpolate(startValue, endValue, t, easing);
-      this.values[frame] = value;
+  get(frame = null) {
+    if(frame === null){
+      return this.compute()
     }
-
-    // Set all entries after endFrame to endValue
-    for (let frame = endFrame + 1; frame < this.values.length; frame++) {
-      this.values[frame] = endValue;
+    else {
+      return this.compute()[frame]
     }
   }
 
-  setValues(value) {
-    this.values = this.values.fill(value)
+  connect(fn){
+    if(!this.locked){
+      this.compute = () => new Array(duration).fill(0).map((_, i) => {
+        return fn(i)})
+      this.locked = true
+    }
+    else{
+      console.error("Signal is locked. Cannot connect again.")
+    }
   }
 
-  interpolate(startValue, endValue, t, easing) {
-    const easingFunction = easingFunctions[easing] || easingFunctions.ease;
-    const easedT = easingFunction(t);
-    return startValue + (endValue - startValue) * easedT;
-  }
+  set(value, startFrame, deltaFrames = 60, easing = 'ease') {
 
-  value(frame) {
-    return this.values[frame];
+    if(!this.values){
+      this.values = new Array(duration).fill(this.initialValue)
+      this.compute = () => this.values
+    }
+
+    if (!this.locked) {
+      const startValue = this.values[startFrame];
+      const endValue = value;
+      const easingFunction = easingFunctions[easing];
+  
+      if (!easingFunction) {
+        console.error(`Easing function '${easing}' not found.`);
+        return;
+      }
+  
+      const transitionValues = new Array(deltaFrames).fill(0).map((_, i) => {
+        const t = i / (deltaFrames - 1);
+        const easedT = easingFunction(t);
+        return startValue + (endValue - startValue) * easedT;
+      });
+  
+      for (let i = 0; i < duration; i++) {
+        if (i < startFrame) {
+          continue;
+        } else if (i < startFrame + deltaFrames) {
+          this.values[i] = transitionValues[i - startFrame];
+        } else {
+          this.values[i] = endValue;
+        }
+      }
+  
+    } else {
+      console.error("Signal is locked. Cannot set directly.");
+    }
   }
 }
 
+export default Signal;
 
-export default Signal
+

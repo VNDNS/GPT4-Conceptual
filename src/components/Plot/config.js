@@ -5,7 +5,8 @@ const data = Array.from({ length: 100 }, (_, index) => ({
 
 export const config = {
   data: data,
-  position: {x: 500, y:500},
+  x:100,
+  y:  100,
   dimensions: {
     width: 600,
     height: 400,

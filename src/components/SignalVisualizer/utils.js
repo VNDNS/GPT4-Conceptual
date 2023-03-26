@@ -18,11 +18,18 @@ export function getColor(index) {
 export function getPlotData(signals, options) {
   const { width, height, padding } = options;
 
+  // Find the maximum value across all signals
+  const globalMax = Math.max(...signals.map(signal => Math.max(...signal)));
+
+  // Normalize each signal based on the global maximum value
+  const normalize = (signal) => signal.map(value => value / globalMax);
+
   return signals.map((signal) => {
-    const normalizedValues = normalize(signal.values);
+    const normalizedValues = normalize(signal);
     return normalizedValues.map((value, index) => ({
       x: (index / (normalizedValues.length - 1)) * (width - 2 * padding) + padding,
       y: (1 - value) * (height - 2 * padding) + padding,
     }));
   });
 }
+

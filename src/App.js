@@ -2,24 +2,21 @@ import React from 'react';
 import Scene from './components/Scene';
 import SignalVisualizer from './components/SignalVisualizer';
 import ControlPanel from './components/ControlPanel';
-import { scene } from './scenes/scene';
-// import { scene } from './scenes/scene2';
 import './styles/main.scss';
 import Plot from './components/Plot/Plot';
 import {PlotClass} from './animation/Plot';
 import { config } from './components/Plot/config';
 import useCurrentFrame from './hooks/useCurrentFrame';
+import Signal from './animation/Signal';
 
 
-const plot = new PlotClass(config)
+const a = new Signal(0);
+const b= new Signal(2);
 
-plot.domain.right.setValue(0, 28,180)
-plot.domain.left.setValue(0, 20,180)
-// plot.dimensions.width.setValues(.1)
-// plot.dimensions.width.setValue(0, 600,60)
+b.connect((i) => 2*a.get(i))
 
-const propsArray = plot.getProps()
-
+a.set(2,60)
+// b.set(3,30)
 
 
 
@@ -27,16 +24,14 @@ const App = () => {
 
   const {currentFrame} = useCurrentFrame()
 
-  const props = propsArray[currentFrame]
 
   return (
     <div className='container'>
       <Scene>
-        <Plot props={props}/>
       </Scene>
       <ControlPanel />
 
-      {/* <SignalVisualizer signals={[plot.domain.right]} /> */}
+      <SignalVisualizer signals={[a.get(), b.get()]} />
     </div>
   );
 };
