@@ -1,4 +1,4 @@
-import Signal2D from '../animation/Signal2D';
+import Signal2D from './Signal2D';
 import Signal from './Signal';
 import { computeTicks } from './util';
 import { fillArray } from './util';

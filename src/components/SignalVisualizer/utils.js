@@ -11,7 +11,13 @@ export function normalize(values) {
 }
 
 export function getColor(index) {
-  const colors = ['red', 'green', 'purple', 'orange', 'yellow'];
+  const colors = [
+    'rgba(255, 0, 0, 0.5)', // red
+    'rgba(0, 128, 0, 0.5)', // green
+    'rgba(0, 0, 255, 0.5)', // blue
+    'rgba(255, 165, 0, 0.5)', // orange
+    'rgba(128, 0, 128, 0.5)', // purple
+  ];
   return colors[index % colors.length];
 }
 

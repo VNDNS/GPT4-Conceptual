@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index', // Change the entry file to TypeScript
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -9,7 +9,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/, // Add TypeScript support
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -26,7 +26,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'], // Add TypeScript extensions
   },
   devServer: {
     static: path.join(__dirname, 'dist'),
